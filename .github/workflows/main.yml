@@ -9,8 +9,36 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+      
+    # Установка JDK    
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+      
+    # Установка Flyway  
+    
+    - name: Install Flyway
+      run: |
+        curl -L -o flyway-commandline.tar.gz "https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/11.1.0/flyway-commandline-11.1.0-linux-x64.tar.gz"
+        tar -xzf flyway-commandline.tar.gz
+        sudo ln -s `pwd`/flyway-11.1.0/flyway /usr/local/bin/flyway
 
-    #### Добавьте шаг с Flyway-миграциями
+    # Проверка, что Postgres работает и доступен перед выполнением миграций, чтобы избежать ошибок подключения
+    
+    - name: Wait for Postgres
+      run: until pg_isready -h localhost -p 5432; do sleep 1; done   
+    
+    # Миграция
+    
+    - name: Run Flyway migrations
+      env:
+        FLYWAY_URL: "jdbc:postgresql://localhost:5432/store"
+        FLYWAY_USER: user
+        FLYWAY_PASSWORD: 1
+      run: flyway migrate -locations=filesystem:sql/migrations
 
     ### Этот шаг оставьте без изменений
     - name: Download and setup autotests binaries
