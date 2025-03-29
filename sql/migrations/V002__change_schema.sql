@@ -8,8 +8,8 @@ FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
 ADD CONSTRAINT fk_product
 FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE;
 
-DROP TABLE orders_date;
+DROP TABLE IF EXISTS orders_date;
 
-DROP TABLE product_info;
+DROP TABLE IF EXISTS product_info;
 
-DROP SEQUENCE orders_date_order_id_seq;
+DROP SEQUENCE IF EXISTS orders_date_order_id_seq;
