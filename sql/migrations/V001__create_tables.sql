@@ -16,7 +16,7 @@ CREATE TABLE order_product (
 );
 
 CREATE TABLE orders_date (
-    id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY,
+    order_id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY,
     status character varying(255),
     date_created DATE DEFAULT CURRENT_DATE
 );
