@@ -1,3 +1,8 @@
+
+ALTER SEQUENCE product_id_seq RESTART WITH 1;
+
+ALTER SEQUENCE orders_id_seq RESTART WITH 1;
+
 INSERT INTO product (name, picture_url, price) VALUES ('Сливочная', 'https://res.cloudinary.com/sugrobov/image/upload/v1623323635/repos/sausages/6.jpg', 320.00);
 INSERT INTO product (name, picture_url, price) VALUES ('Особая', 'https://res.cloudinary.com/sugrobov/image/upload/v1623323635/repos/sausages/5.jpg', 179.00);
 INSERT INTO product (name, picture_url, price) VALUES ('Молочная', 'https://res.cloudinary.com/sugrobov/image/upload/v1623323635/repos/sausages/4.jpg', 225.00);
