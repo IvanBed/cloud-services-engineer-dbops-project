@@ -1,20 +1,40 @@
-# dbops-project
-Исходный репозиторий для выполнения проекта дисциплины "DBOps"
+# DBOps Project
 
-Создание новой базы.
+Репозиторий для выполнения проекта по дисциплине "DBOps" (Администрирование баз данных)
+
+## Настройка базы данных
+
+### 1. Создание новой базы данных
+```sql
 CREATE DATABASE store;
 
-Добавление нового юзера.
-CREATE USER migrations WITH PASSWORD '1' 
+-- Создание пользователя для миграций
+CREATE USER migrations WITH PASSWORD '1';
+
+-- Назначение прав на схему public
 GRANT ALL PRIVILEGES ON SCHEMA public TO migrations;
+
+-- Права на все таблицы
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO migrations;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON TABLES TO migrations;
 
-
+-- Права на будущие таблицы
+ALTER DEFAULT PRIVILEGES IN SCHEMA public 
+GRANT ALL PRIVILEGES ON TABLES TO migrations;
 
 
 SQL запрос.
 
-SELECT o.date_created, SUM(p.price) FROM orders o INNER JOIN order_product op 
-ON op.order_id = o.id INNER JOIN product p ON op.product_id = p.id 
-WHERE o.status = 'shipped' AND o.date_created BETWEEN NOW()::DATE-EXTRACT(DOW FROM NOW())::INTEGER-7 AND NOW()::DATE-EXTRACT(DOW from NOW())::INTEGER group by 1;
+SELECT 
+    o.date_created, 
+    SUM(p.price) AS total_sum
+FROM 
+    orders o 
+    INNER JOIN order_product op ON op.order_id = o.id 
+    INNER JOIN product p ON op.product_id = p.id 
+WHERE 
+    o.status = 'shipped' 
+    AND o.date_created BETWEEN 
+        NOW()::DATE - EXTRACT(DOW FROM NOW())::INTEGER - 7 
+        AND NOW()::DATE - EXTRACT(DOW from NOW())::INTEGER
+GROUP BY 
+    o.date_created;

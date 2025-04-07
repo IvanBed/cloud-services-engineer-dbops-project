@@ -1,3 +1,4 @@
+/*Добавление данных, сохранил структуру оригинального скрипта*/
 INSERT INTO product (id, name, picture_url, price)
 OVERRIDING SYSTEM VALUE 
 VALUES 
