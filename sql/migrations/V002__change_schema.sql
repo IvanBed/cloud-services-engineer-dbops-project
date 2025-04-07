@@ -1,20 +1,20 @@
-
 /*Добавление в таблицу product атрибута для цены*/
 ALTER TABLE product
-    ADD COLUMN price double precision
+    ADD COLUMN price double precision,
     ADD CONSTRAINT pk_product PRIMARY KEY (id);
 
 /*Добавление в таблицу orders атрибута для даты создания*/
 ALTER TABLE orders 
-    ADD COLUMN date_created date
+    ADD COLUMN date_created date,
     ADD CONSTRAINT pk_orders PRIMARY KEY (id);
 
-/*Добавление внешнийх ключей ключей*/
-ALTER TABLE order_product ADD CONSTRAINT fk_order
-FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-ADD CONSTRAINT fk_product
-FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE;
-
+/*Добавление внешних ключей*/
+ALTER TABLE order_product 
+    ADD CONSTRAINT fk_order FOREIGN KEY (order_id) 
+    REFERENCES orders(id) ON DELETE CASCADE,
+    
+    ADD CONSTRAINT fk_product FOREIGN KEY (product_id) 
+    REFERENCES product(id) ON DELETE CASCADE;
 
 /*Удаление ненужных таблиц*/
 DROP TABLE IF EXISTS orders_date;
